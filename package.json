@@ -1,0 +1,30 @@
+{
+  "name": "resize-panel",
+  "version": "1.0.0",
+  "description": "A web component for resizable panels with custom events and theming.",
+  "type": "module",
+  "main": "resize-panel.js",
+  "module": "resize-panel.js",
+  "customElements": "custom-elements.json",
+  "files": [
+    "resize-panel.js",
+    "custom-elements.json",
+    "resize-panel.d.ts"
+  ],
+  "scripts": {
+    "publish": "npm publish --access public"
+  },
+  "keywords": [
+    "web-components",
+    "custom-element",
+    "resize-panel",
+    "resizable",
+    "theming"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jagreehal/resize-panel"
+  },
+  "author": "Jag Reehal <jag@jagreehal.con>",
+  "license": "MIT"
+}

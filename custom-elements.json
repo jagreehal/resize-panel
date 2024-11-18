@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "1.0.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "resize-panel.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "ResizePanel",
+          "members": [
+            {
+              "kind": "field",
+              "name": "width",
+              "type": { "text": "string" },
+              "description": "Get or set the panel width",
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "height",
+              "type": { "text": "string" },
+              "description": "Get or set the panel height",
+              "privacy": "public"
+            },
+            {
+              "kind": "method",
+              "name": "resizeTo",
+              "parameters": [
+                {
+                  "name": "width",
+                  "type": { "text": "string" }
+                },
+                {
+                  "name": "height",
+                  "type": { "text": "string" }
+                }
+              ],
+              "description": "Resize the panel programmatically",
+              "privacy": "public"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "outer-w",
+              "type": { "text": "string" },
+              "default": "auto",
+              "description": "Outer container width"
+            },
+            {
+              "name": "outer-h",
+              "type": { "text": "string" },
+              "default": "auto",
+              "description": "Outer container height"
+            },
+            {
+              "name": "w",
+              "type": { "text": "string" },
+              "default": "19rem",
+              "description": "Panel width"
+            },
+            {
+              "name": "h",
+              "type": { "text": "string" },
+              "default": "12.5rem",
+              "description": "Panel height"
+            },
+            {
+              "name": "src",
+              "type": { "text": "string" },
+              "description": "URL for iframe content"
+            },
+            {
+              "name": "aria-label",
+              "type": { "text": "string" },
+              "description": "Accessibility label"
+            },
+            {
+              "name": "min-w",
+              "type": { "text": "string" },
+              "default": "12.5rem",
+              "description": "Minimum panel width"
+            },
+            {
+              "name": "max-w",
+              "type": { "text": "string" },
+              "default": "100%",
+              "description": "Maximum panel width"
+            },
+            {
+              "name": "min-h",
+              "type": { "text": "string" },
+              "default": "9.375rem",
+              "description": "Minimum panel height"
+            },
+            {
+              "name": "max-h",
+              "type": { "text": "string" },
+              "default": "100%",
+              "description": "Maximum panel height"
+            },
+            {
+              "name": "scrolling",
+              "type": { "text": "string" },
+              "default": "auto",
+              "description": "iframe scrolling behavior"
+            },
+            {
+              "name": "data-display-position",
+              "type": { "text": "string" },
+              "default": "top-right",
+              "description": "Position of the resize display (top-left, top-right, bottom-left, bottom-right, none)"
+            },
+            {
+              "name": "data-theme",
+              "type": { "text": "string" },
+              "default": "light",
+              "description": "Theme variant (light or dark)"
+            }
+          ],
+          "events": [
+            {
+              "name": "resize",
+              "type": { "text": "CustomEvent" },
+              "description": "Fired when the panel is resized with width and height details"
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--resize-panel-bg",
+              "description": "Background color of the panel"
+            },
+            {
+              "name": "--resize-panel-border",
+              "description": "Border color of the panel"
+            },
+            {
+              "name": "--resize-panel-text",
+              "description": "Text color of the panel"
+            },
+            {
+              "name": "--resize-panel-shadow",
+              "description": "Shadow color of the panel"
+            },
+            {
+              "name": "--resize-panel-resize-bg",
+              "description": "Background color of the resize display"
+            },
+            {
+              "name": "--resize-panel-resize-text",
+              "description": "Text color of the resize display"
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "container",
+              "description": "The main panel container element"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
