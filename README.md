@@ -1,5 +1,7 @@
 # Resize Panel Web Component
 
+![Resize Panel Demo](resize-panel.gif)
+
 A lightweight, customisable web component that creates resizable panels with real-time dimension display.
 
 Perfect for creating adjustable containers, preview windows, and interactive content areas in your web applications.
@@ -37,9 +39,10 @@ npm install resize-panel
 ### Via CDN
 
 ```html
-<script type="module">
-  import { ResizePanel } from 'https://unpkg.com/resize-panel/resize-panel.js';
-</script>
+<script
+  type="module"
+  src="https://unpkg.com/resize-panel@1.0.0/resize-panel.js"
+></script>
 ```
 
 ## Basic Usage
@@ -55,9 +58,18 @@ npm install resize-panel
 ### Custom Dimensions
 
 ```html
-<resize-panel w="30rem" h="20rem">
-  <div>Panel with custom size</div>
-</resize-panel>
+<script
+  type="module"
+  src="https://unpkg.com/resize-panel@1.0.0/resize-panel.js"
+></script>
+<body>
+  <resize-panel
+    src="https://play.tailwindcss.com/14A0mqZ9m8?layout=preview"
+    w="40rem"
+    h="30rem"
+  >
+  </resize-panel>
+</body>
 ```
 
 ## Common Use Cases
