@@ -1,6 +1,6 @@
 {
   "name": "resize-panel",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A web component for resizable panels with custom events and theming.",
   "type": "module",
   "main": "resize-panel.js",
