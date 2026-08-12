@@ -2,6 +2,15 @@ import { expect, test } from '@playwright/test';
 import { boxSize, dragCorner, events, openPanel } from './helpers';
 
 test.describe('dragging the resize corner', () => {
+  // Dragging the native `resize: both` handle is the browser's own affordance.
+  // Headless WebKit on Linux does not act on synthetic pointer events over it,
+  // though macOS WebKit does. The component's own behaviour — reacting to a size
+  // change and honouring min/max — is covered without a drag in panel.spec.ts.
+  test.skip(
+    ({ browserName }) => browserName === 'webkit',
+    'headless WebKit ignores synthetic drags on the native resize handle',
+  );
+
   test('resizes the panel', async ({ page }) => {
     const panel = await openPanel(page, { w: '300px', h: '200px' });
 
