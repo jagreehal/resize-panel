@@ -9,10 +9,20 @@
   "files": [
     "resize-panel.js",
     "custom-elements.json",
-    "resize-panel.d.ts"
+    "resize-panel.d.ts",
+    "CHANGELOG.md"
   ],
+  "packageManager": "pnpm@11.21.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
-    "publish": "npm publish --access public"
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish"
   },
   "keywords": [
     "web-components",
@@ -23,8 +33,15 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/jagreehal/resize-panel"
+    "url": "git+https://github.com/jagreehal/resize-panel.git"
   },
-  "author": "Jag Reehal <jag@jagreehal.con>",
-  "license": "MIT"
+  "homepage": "https://github.com/jagreehal/resize-panel#readme",
+  "bugs": "https://github.com/jagreehal/resize-panel/issues",
+  "author": "Jag Reehal <jag@jagreehal.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@changesets/cli": "2.31.0",
+    "@playwright/test": "1.60.0",
+    "serve": "14.2.6"
+  }
 }

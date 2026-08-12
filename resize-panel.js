@@ -20,8 +20,17 @@ class ResizePanel extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.render();
-    this.setupResizeDisplay();
+  }
+
+  // Rendering waits for connection, because at construction time the element has
+  // no attributes yet: both the parser and document.createElement() set them
+  // afterwards. Reading them in the constructor rendered every panel at its
+  // defaults whenever it was created from script, as frameworks do.
+  connectedCallback() {
+    if (!this.shadowRoot.firstChild) {
+      this.render();
+      this.setupResizeDisplay();
+    }
   }
 
   // Public getter and setter for width
@@ -31,7 +40,6 @@ class ResizePanel extends HTMLElement {
 
   set width(value) {
     this.setAttribute('w', value);
-    this.updateDimensions();
   }
 
   // Public getter and setter for height
@@ -41,7 +49,6 @@ class ResizePanel extends HTMLElement {
 
   set height(value) {
     this.setAttribute('h', value);
-    this.updateDimensions();
   }
 
   // Public method to resize the panel programmatically
@@ -53,6 +60,7 @@ class ResizePanel extends HTMLElement {
   // Update the dimensions dynamically
   updateDimensions() {
     const container = this.shadowRoot.querySelector('.panel-container');
+    if (!container) return;
     container.style.width = this.width;
     container.style.height = this.height;
   }
@@ -83,15 +91,16 @@ class ResizePanel extends HTMLElement {
           --resize-panel-resize-bg: rgba(0, 0, 0, 0.7);
           --resize-panel-resize-text: #ffffff;
 
-          /* Dark theme overrides */
-          &[data-theme="dark"] {
-            --resize-panel-bg: var(--color-gray-900);
-            --resize-panel-border: var(--color-gray-600);
-            --resize-panel-text: var(--color-gray-50);
-            --resize-panel-shadow: rgba(0, 0, 0, 0.6);
-            --resize-panel-resize-bg: rgba(255, 255, 255, 0.8);
-            --resize-panel-resize-text: #000000;
-          }
+        }
+
+        /* Dark theme overrides */
+        :host([data-theme='dark']) {
+          --resize-panel-bg: var(--color-gray-900);
+          --resize-panel-border: var(--color-gray-600);
+          --resize-panel-text: var(--color-gray-50);
+          --resize-panel-shadow: rgba(0, 0, 0, 0.6);
+          --resize-panel-resize-bg: rgba(255, 255, 255, 0.8);
+          --resize-panel-resize-text: #000000;
         }
 
         /* Tailwind-inspired color palette */
@@ -116,6 +125,7 @@ class ResizePanel extends HTMLElement {
         }
 
         .panel-container {
+          box-sizing: border-box;
           min-width: ${minW};
           max-width: ${maxW};
           min-height: ${minH};
@@ -181,7 +191,7 @@ class ResizePanel extends HTMLElement {
             src
               ? `
             <div class="loading">Loading...</div>
-            <iframe class="panel-content" src="${src}" scrolling="${scrolling}" frameborder="0"></iframe>
+            <iframe class="panel-content" src="${src}" title="${this.getAttribute('aria-label') || 'Embedded content'}" scrolling="${scrolling}" frameborder="0"></iframe>
           `
               : `
             <div class="panel-content">
@@ -207,20 +217,26 @@ class ResizePanel extends HTMLElement {
   setupResizeDisplay() {
     const container = this.shadowRoot.querySelector('.panel-container');
     const resizeDisplay = this.shadowRoot.querySelector('.resize-display');
-    const displayPosition = this.getAttribute('data-display-position');
+    // Defaulted, or the readout loses its position class on the first update and
+    // lands wherever `position: fixed` with no offsets puts it.
+    const displayPosition =
+      this.getAttribute('data-display-position') || 'top-right';
+    const showReadout = displayPosition !== 'none';
 
-    if (displayPosition === 'none') {
-      resizeDisplay.style.display = 'none';
-      return;
-    }
+    // A re-render replaces the nodes this observer was watching.
+    this.resizeObserver?.disconnect();
 
     const updateDisplay = () => {
       const width = container.style.width || container.offsetWidth + 'px';
       const height = container.style.height || container.offsetHeight + 'px';
 
-      resizeDisplay.textContent = `${width} × ${height}`;
-      resizeDisplay.className = `resize-display ${displayPosition}`;
-      resizeDisplay.style.display = 'block';
+      // The readout is presentation; the event is the API. Hiding one must not
+      // silence the other.
+      if (showReadout) {
+        resizeDisplay.textContent = `${width} × ${height}`;
+        resizeDisplay.className = `resize-display ${displayPosition}`;
+        resizeDisplay.style.display = 'block';
+      }
 
       // Dispatch custom 'resize' event
       this.dispatchEvent(
@@ -246,12 +262,17 @@ class ResizePanel extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue) {
-      if (name === 'data-display-position' || name === 'data-theme') {
-        this.render();
-        this.setupResizeDisplay();
-      }
+    // Before the first render the shadow root is empty and connectedCallback is
+    // about to read every attribute anyway.
+    if (oldValue === newValue || !this.shadowRoot.firstChild) return;
+
+    if (name === 'w' || name === 'h') {
+      this.updateDimensions();
+      return;
     }
+
+    this.render();
+    this.setupResizeDisplay();
   }
 
   disconnectedCallback() {

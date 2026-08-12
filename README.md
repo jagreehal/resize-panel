@@ -272,17 +272,24 @@ resize-panel[data-theme='dark'] {
 
 ### Attributes
 
-| Attribute               | Default     | Description                   |
-| ----------------------- | ----------- | ----------------------------- |
-| `w`                     | `19rem`     | Panel width                   |
-| `h`                     | `12.5rem`   | Panel height                  |
-| `src`                   | `null`      | URL for iframe content        |
-| `min-w`                 | `12.5rem`   | Minimum width constraint      |
-| `max-w`                 | `100%`      | Maximum width constraint      |
-| `min-h`                 | `9.375rem`  | Minimum height constraint     |
-| `max-h`                 | `100%`      | Maximum height constraint     |
-| `data-theme`            | `light`     | Visual theme (`light`/`dark`) |
-| `data-display-position` | `top-right` | Position of size display      |
+| Attribute               | Default     | Description                                   |
+| ----------------------- | ----------- | --------------------------------------------- |
+| `w`                     | `19rem`     | Panel width                                   |
+| `h`                     | `12.5rem`   | Panel height                                  |
+| `src`                   | `null`      | URL for iframe content                        |
+| `aria-label`            | `null`      | Accessible name, used as the iframe title     |
+| `outer-w`               | `auto`      | Width of the container around the panel       |
+| `outer-h`               | `auto`      | Height of the container around the panel      |
+| `min-w`                 | `12.5rem`   | Minimum width constraint                      |
+| `max-w`                 | `100%`      | Maximum width constraint                      |
+| `min-h`                 | `9.375rem`  | Minimum height constraint                     |
+| `max-h`                 | `100%`      | Maximum height constraint                     |
+| `scrolling`             | `auto`      | Scrollbars in the iframe (`auto`/`yes`/`no`)  |
+| `data-theme`            | `light`     | Visual theme (`light`/`dark`)                 |
+| `data-display-position` | `top-right` | Position of size display, or `none` to hide it |
+
+Sizes are exact: the panel's border is inside the width you ask for, so `w="400px"`
+measures 400px.
 
 ### Events
 

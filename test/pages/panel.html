@@ -1,0 +1,19 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>resize-panel</title>
+<style>
+  body { margin: 0; font: 16px/1.5 system-ui; }
+</style>
+<script type="module" src="../../resize-panel.js"></script>
+<script type="module">
+  const query = new URLSearchParams(location.search);
+
+  window.__events = [];
+  const panel = document.createElement('resize-panel');
+  for (const [name, value] of query) panel.setAttribute(name, value);
+  panel.innerHTML = '<div id="slotted">Panel content</div>';
+  panel.addEventListener('resize', (event) => window.__events.push(event.detail));
+
+  document.body.append(panel);
+  window.__panel = panel;
+</script>
